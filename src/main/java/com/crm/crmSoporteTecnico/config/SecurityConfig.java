@@ -103,8 +103,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
-                                "/auth/login",
-                                "/public/service-request"
+                                "/sistema/api/v1/auth/login",
+                                "/sistema/api/v1/public/service-request"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
