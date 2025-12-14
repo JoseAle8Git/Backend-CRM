@@ -48,9 +48,10 @@ public class AuthController {
             // Crear y configurar la Cookie HttpOnly (Seguridad).
             Cookie cookie = new Cookie("jwt", token);
             cookie.setHttpOnly(true); // Esto impide que JavaScript acceda al token (defensa XSS).
-            cookie.setSecure(false); // True si se usa HTTPS (se tiene cambiar en producción).
+            cookie.setSecure(true); // True si se usa HTTPS (se tiene cambiar en producción).
             cookie.setMaxAge(3600); // Tiempo de vida de la cookie.
             cookie.setPath("/"); // Disponible en toda la aplicación.
+            cookie.setAttribute("SameSite", "None"); // Obligatorio para cross-site.
 
             // Añadir la cookie a la respuesta HTTP.
             response.addCookie(cookie);
