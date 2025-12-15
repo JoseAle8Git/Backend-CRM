@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/technician")
+@RequestMapping("/technician")
 public class TechnicianController {
     private final UserRepository userRepository;
     private final IIncidenceService incidenceService;
