@@ -45,6 +45,7 @@ public class AuthController {
             // Genera el token JWT.
             String token = authService.generateToken(user.getUsername());
 
+            /*
             // Crear y configurar la Cookie HttpOnly (Seguridad).
             Cookie cookie = new Cookie("jwt", token);
             cookie.setHttpOnly(true); // Esto impide que JavaScript acceda al token (defensa XSS).
@@ -55,6 +56,13 @@ public class AuthController {
 
             // Añadir la cookie a la respuesta HTTP.
             response.addCookie(cookie);
+             */
+
+            String cookie = String.format(
+                    "jwt=%s; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=3600",
+                    token
+            );
+            response.setHeader("Set-Cookie", cookie);
 
             // Devolver la información no sensible al Frontend.
             AuthResponse authResponse = AuthResponse.fromUser(user);
@@ -72,12 +80,16 @@ public class AuthController {
      */
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
+        /*
         // Se crea una cookie expirada para eliminar el JWT del navegador.
         Cookie cookie = new Cookie("jwt", null);
         cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         response.addCookie(cookie);
+         */
+        String cookie = "jwt=; Path=/; HttpOnly; SameSite=None; Max-Age=0";
+        response.setHeader("Set-Cookie", cookie);
 
         return ResponseEntity.ok("Sesión cerrada correctamente");
     }
